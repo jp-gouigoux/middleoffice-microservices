@@ -12,6 +12,7 @@ app.get('*', function(req, res) {
     +'<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">'
     +'</head>'
     +'<body>'
+    +'<div class="col-sm-5">'
     +'<form method="POST" action="' + urlapi + '">'
     +'<div class="form-group">'
     +'<input type="text" class="form-control input-lg" placeholder="Request type code" name="code"></input>'
@@ -22,6 +23,7 @@ app.get('*', function(req, res) {
     +'<button type="submit">Enregistrer</button>'
     +'</div>'
     +'</form>'
+    +'</div>'
     +'</body>'
     +'</html>');
 });
