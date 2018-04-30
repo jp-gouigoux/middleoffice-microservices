@@ -36,7 +36,10 @@ app.post('/api/requesttypes/', function(req, res) {
                 if (error) {
                     console.log('Error in inserting request type into MongoDB collection: ', error);
                 } else {
+                    db.close();
+                    console.log('A request type has been inserted');
                     res.status(203);
+                    res.end();
                 }
             });
         }
