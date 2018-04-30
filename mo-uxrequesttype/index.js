@@ -20,7 +20,7 @@ app.get('*', function(req, res) {
     +'<input type="text" class="form-control input-lg" placeholder="URL to call upon vote #1" name="url1"></input>'
     +'<input type="text" class="form-control input-lg" placeholder="Label for vote #2" name="vote2"></input>'
     +'<input type="text" class="form-control input-lg" placeholder="URL to call upon vote #2" name="url2"></input>'
-    +'<button type="submit">Enregistrer</button>'
+    +'<button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>'
     +'</div>'
     +'</form>'
     +'</div>'
