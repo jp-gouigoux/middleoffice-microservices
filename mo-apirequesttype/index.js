@@ -17,7 +17,7 @@ app.get('/api/requesttypes/', function(req, res) {
             console.log('Unable to connect to the MongoDB server: ', err);
         } else {
             console.log('Connected to MongoDB server');
-            var myJson = JSON.stringify(db.collection('requesttypes'));
+            var myJson = JSON.stringify(db.collection('requesttypes').findAll());
             res.contentType('application/json');
             res.status(200);
             res.json(myJson);
