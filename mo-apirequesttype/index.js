@@ -15,12 +15,19 @@ app.get('/api/requesttypes/', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
+            res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            var myJson = JSON.stringify(db.collection('requesttypes').find({}));
-            res.contentType('application/json');
-            res.status(200);
-            res.json(myJson);
+            var myJson = JSON.stringify(db.collection('requesttypes').find({}).toArray(function (error, results) {
+                if (error) {
+                    console.log('Unable to retrieve request types from MongoDB collection: ', err);
+                    res.status(500).end();
+                } else {
+                    res.contentType('application/json');
+                    res.status(200);
+                    res.json(results);
+                }
+            }));
         }
     });
   });
@@ -29,12 +36,14 @@ app.post('/api/requesttypes/', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
+            res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
             var requesttype = { code: req.body.code, vote1: req.body.vote1, url1: req.body.url1, vote2: req.body.vote2, url2: req.body.url2 };
             db.collection('requesttypes').insertOne(requesttype, function(error, result) {
                 if (error) {
                     console.log('Error in inserting request type into MongoDB collection: ', error);
+                    res.status(500).end();
                 } else {
                     db.close();
                     console.log('A request type has been inserted');
