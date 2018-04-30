@@ -1,0 +1,60 @@
+version: '2.1'
+services:
+
+  traefik:
+    image: traefik:1.5.4-alpine
+    container_name: traefik
+    command: --web --docker --docker.domain=imta.westeurope.cloudapp.azure.com --logLevel=DEBUG
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  
+  mongodb:
+    image: mongo:3.6.4
+    container_name: db
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+  
+  elasticsearch:
+    image: elasticsearch:1.7.6-alpine
+    container_name: es
+    ports:
+      - 9200:9200
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9200"]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+  
+  mo-uxrequesttype:
+    image: jpgouigoux/mo-uxrequesttype:0.1
+    build: ./mo-uxrequesttype
+    container_name: mo-uxrequesttype
+    labels:
+      traefik.frontend.rule: "PathPrefixStrip:/api/ux/requesttype/"
+      traefik.port: "80"
+    environment:
+      - URLAPI=http://imta.westeurope.cloudapp.azure.com/api/requesttypes/
+    restart: on-failure
+
+  mo-apirequesttype:
+    image: jpgouigoux/mo-apirequesttype:0.1
+    build: ./mo-apirequesttype
+    container_name: mo-apirequesttype
+    labels:
+      traefik.frontend.rule: "PathPrefixStrip:/api/requesttypes/"
+      traefik.port: "80"
+    links:
+      - mongodb:mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/requesttypes/
+    restart: on-failure
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+volumes:
+  mongodata:

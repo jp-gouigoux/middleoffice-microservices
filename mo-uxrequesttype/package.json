@@ -1,0 +1,15 @@
+{
+    "name"         : "mo-uxrequesttype",
+    "version"      : "0.0.1",
+    "description"  : "Middle Office, UX for request types",
+    "main"         : "index.js",
+    "author"       : "JP Gouigoux <jp.gouigoux@free.fr>",
+    "license"      : "MIT",
+    "repository"   : {
+      "type" : "git",
+      "url" : "git://github.com/jp-gouigoux/middleoffice-microservices.git"
+    },
+    "dependencies" : {
+      "express" : "~4.16.2"
+    }
+  }
