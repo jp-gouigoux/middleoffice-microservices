@@ -98,6 +98,8 @@ app.patch('/api/requests/:id', function(req, res) {
 });
 
 app.post('/api/requests', function(req, res) {
+    // TODO : encode the given values in order to avoid problems in display and security breaches, particularly
+    // for technical payload which often comes with quotes thus causing problem in the display of text area
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
