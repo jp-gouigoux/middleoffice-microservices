@@ -19,7 +19,7 @@ app.get('/api/requests', function(req, res) {
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            db.collection('requests').find({}).toArray(function (error, results) {
+            db.collection('requests').find({}, { _id: 0 }).toArray(function (error, results) {
                 if (error) {
                     console.log('Unable to retrieve requests from MongoDB collection: ', error);
                     res.status(500).end();
