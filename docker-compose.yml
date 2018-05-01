@@ -93,10 +93,10 @@ services:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com
     restart: on-failure
 
-  mo-uxrequest-tobevoted:
-    image: jpgouigoux/mo-uxrequest-tobevoted:0.1
-    build: ./mo-uxrequest-tobevoted
-    container_name: mo-uxrequest-tobevoted
+  mo-uxrequests-tobevoted:
+    image: jpgouigoux/mo-uxrequests-tobevoted:0.1
+    build: ./mo-uxrequests-tobevoted
+    container_name: mo-uxrequests-tobevoted
     labels:
       traefik.frontend.rule: "PathPrefixStrip:/api/ux/requests"
       traefik.port: "80"
