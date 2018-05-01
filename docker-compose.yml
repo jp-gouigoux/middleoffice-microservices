@@ -34,7 +34,7 @@ services:
     build: ./mo-apirequest
     container_name: mo-apirequest
     labels:
-      traefik.frontend.rule: "Path:/api/requests,/api/requests/{id:[0-9a-z]+}"
+      traefik.frontend.rule: "Path: /api/requests, /api/requests/{id:[0-9a-z]+}"
       traefik.port: "80"
     links:
       - mongodb:mongodb
@@ -51,7 +51,7 @@ services:
     build: ./mo-apirequesttype
     container_name: mo-apirequesttype
     labels:
-      traefik.frontend.rule: "Path:/api/requesttypes"
+      traefik.frontend.rule: "Path: /api/requesttypes"
       traefik.port: "80"
     links:
       - mongodb:mongodb
@@ -68,7 +68,7 @@ services:
     build: ./mo-apivote
     container_name: mo-apivote
     labels:
-      traefik.frontend.rule: "Path:/api/requests/{id:[0-9a-z]+}/vote"
+      traefik.frontend.rule: "Path: /api/requests/{id:[0-9a-z]+}/vote"
       traefik.port: "80"
     links:
       - mongodb:mongodb
@@ -85,7 +85,7 @@ services:
     build: ./mo-portal
     container_name: mo-portal
     labels:
-      traefik.frontend.rule: "Path:/"
+      traefik.frontend.rule: "Path: /"
       traefik.port: "80"
     restart: on-failure
     
@@ -94,7 +94,7 @@ services:
     build: ./mo-uxrequest
     container_name: mo-uxrequest
     labels:
-      traefik.frontend.rule: "PathStrip:/api/ux/request"
+      traefik.frontend.rule: "PathStrip: /api/ux/request"
       traefik.port: "80"
     environment:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com
@@ -105,7 +105,7 @@ services:
     build: ./mo-uxrequest-vote
     container_name: mo-uxrequest-vote
     labels:
-      traefik.frontend.rule: "PathStripRegex:/api/ux/requests/{id:[0-9a-z]+}/vote"
+      traefik.frontend.rule: "PathStripRegex: /api/ux/requests/{id:[0-9a-z]+}/vote"
       traefik.port: "80"
     environment:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com
@@ -116,7 +116,7 @@ services:
     build: ./mo-uxrequests-tobevoted
     container_name: mo-uxrequests-tobevoted
     labels:
-      traefik.frontend.rule: "PathStrip:/api/ux/requests"
+      traefik.frontend.rule: "PathStrip: /api/ux/requests"
       traefik.port: "80"
     environment:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com
@@ -127,7 +127,7 @@ services:
     build: ./mo-uxrequesttype
     container_name: mo-uxrequesttype
     labels:
-      traefik.frontend.rule: "PathStrip:/api/ux/requesttype"
+      traefik.frontend.rule: "PathStrip: /api/ux/requesttype"
       traefik.port: "80"
     environment:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com

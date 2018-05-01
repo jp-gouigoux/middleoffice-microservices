@@ -34,7 +34,7 @@ app.get('/api/requests', function(req, res) {
     });
   });
 
-app.get('/api/requests/{id}', function(req, res) {
+app.get('/api/requests/:id', function(req, res) {
     console.log('Inside the GET /api/requests/{id}');
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
@@ -42,9 +42,9 @@ app.get('/api/requests/{id}', function(req, res) {
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            db.collection('requests').findOne({ _id: req.params.id }, function (error, result) {
+            db.collection('requests').findOne({ _id: req.id }, function (error, result) {
                 if (error) {
-                    console.log('Unable to retrieve request ' + req.params.id + ' from MongoDB collection: ', error);
+                    console.log('Unable to retrieve request ' + req.id + ' from MongoDB collection: ', error);
                     res.status(500).end();
                 } else {
                     res.contentType('application/json');
