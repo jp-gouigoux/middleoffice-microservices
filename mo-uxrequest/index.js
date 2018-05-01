@@ -11,6 +11,7 @@ app.get('*', function(req, res) {
     +'<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">'
     +'</head>'
     +'<body>'
+    +'<h1>Please describe your request</h1>'
     +'<div class="col-sm-5">'
     +'<form method="POST" action="' + api_url + '">'
     +'<div class="form-group">'
