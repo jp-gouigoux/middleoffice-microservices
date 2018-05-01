@@ -39,7 +39,18 @@ app.post('/api/requesttypes/', function(req, res) {
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            var requesttype = { code: req.body.code, vote1: req.body.vote1, url1: req.body.url1, vote2: req.body.vote2, url2: req.body.url2 };
+            var requesttype = { 
+                code: req.body.code,
+                possibleVotes: [{
+                    code: req.body.vote1,
+                    title: [{ lang: 'fr-FR', value=req.body.vote1}],
+                    actions: req.body.url1.length == 0 ? [] : [{ type: 'webcall', link: { href: req.body.url1, method: 'POST', body: '{payload}' }}]
+                },{
+                    code: req.body.vote2,
+                    title: [{ lang: 'fr-FR', value=req.body.vote2}],
+                    actions: req.body.url2.length == 0 ? [] : [{ type: 'webcall', link: { href: req.body.url2, method: 'POST', body: '{payload}' }}]
+                }]
+            };
             db.collection('requesttypes').insertOne(requesttype, function(error, result) {
                 if (error) {
                     console.log('Error in inserting request type into MongoDB collection: ', error);
@@ -47,6 +58,7 @@ app.post('/api/requesttypes/', function(req, res) {
                 } else {
                     db.close();
                     console.log('A request type has been inserted');
+                    // TODO : Add a Location header, using an environment variable for base URL
                     res.status(203);
                     res.end();
                 }
