@@ -44,7 +44,9 @@ app.post('/api/requests/{id}/vote', function(req, res) {
                             console.log('A vote has been inserted');
                             // TODO : Add a Location header, using an environment variable for base URL
                             res.status(203);
-                            res.end();
+                            // TODO : Could point to the entity just created, if it suits better the UX
+                            // TODO : In an iFrame approach, could point back to the list, which would be in the same UI in this case
+                            res.send('<html><body><h1>Your vote has been cast !</h1><p>Click <a href="' + base_url + '">here</a> to go back to main menu</p></body></html>');
                         }
                     });        
                 }
