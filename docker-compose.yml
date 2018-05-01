@@ -34,7 +34,7 @@ services:
     build: ./mo-apirequest
     container_name: mo-apirequest
     labels:
-      traefik.frontend.rule: "PathPrefix:/api/requests"
+      traefik.frontend.rule: "Path:/api/requests"
       traefik.port: "80"
     links:
       - mongodb:mongodb
@@ -51,7 +51,7 @@ services:
     build: ./mo-apirequesttype
     container_name: mo-apirequesttype
     labels:
-      traefik.frontend.rule: "PathPrefix:/api/requesttypes"
+      traefik.frontend.rule: "Path:/api/requesttypes"
       traefik.port: "80"
     links:
       - mongodb:mongodb
@@ -68,7 +68,7 @@ services:
     build: ./mo-apivote
     container_name: mo-apivote
     labels:
-      traefik.frontend.rule: "PathPrefix:/api/requests/{id}/vote"
+      traefik.frontend.rule: "Path:/api/requests/{id:[0-9a-z]+}/vote"
       traefik.port: "80"
     links:
       - mongodb:mongodb

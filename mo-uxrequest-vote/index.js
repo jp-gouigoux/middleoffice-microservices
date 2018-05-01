@@ -7,7 +7,7 @@ var requesttypes_url = base_url + '/api/requesttypes/{id}';
 const request = require('request');
 
 app.get('*', function(req, res) {
-    var requestobject_url = base_url + req.header('X-Forwarded-Prefix').replace('/vote', '');
+    var requestobject_url = base_url + req.header('X-Forwarded-Prefix').replace('/vote', '').replace('/ux', ''); // TODO : Make this construction less dependent from UX URLs by directly extracting the request id
     console.log('requestobject_url: ' + requestobject_url);
     request(requestobject_url, { json: true }, function(error, result, body) {
         if (error) {
