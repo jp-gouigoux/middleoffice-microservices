@@ -35,7 +35,6 @@ app.get('/api/requests', function(req, res) {
   });
 
 app.get('/api/requests/:id', function(req, res) {
-    console.log('Inside the GET /api/requests/{id}');
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);

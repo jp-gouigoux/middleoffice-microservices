@@ -4,6 +4,7 @@ var port = process.env.PORT || 80;
 var mongodb = require('mongodb');
 var mongo_url = process.env.MONGO_URL || 'mongodb://localhost:27017/middleoffice';
 var MongoClient = mongodb.MongoClient;
+var base_url = process.env.BASE_URL || 'http://localhost/middleoffice/';
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // parse application/json
