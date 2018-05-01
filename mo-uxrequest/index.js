@@ -1,4 +1,4 @@
-var express  = require('express');
+var express = require('express');
 var app = express();
 var port = process.env.PORT || 80;
 var base_url = process.env.BASE_URL || 'http://localhost/middleoffice';
