@@ -1,0 +1,17 @@
+{
+    "name"         : "mo-apirequest",
+    "version"      : "0.0.1",
+    "description"  : "Middle Office, API for requests",
+    "main"         : "index.js",
+    "author"       : "JP Gouigoux <jp.gouigoux@free.fr>",
+    "license"      : "MIT",
+    "repository"   : {
+      "type" : "git",
+      "url" : "git://github.com/jp-gouigoux/middleoffice-microservices.git"
+    },
+    "dependencies" : {
+      "express"         : "~4.16.2",
+      "mongodb"         : "~2.2.22",
+      "body-parser"     : "~1.18.2"
+    }
+  }

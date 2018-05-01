@@ -2,7 +2,7 @@ var express  = require('express');
 var app = express();
 var port = process.env.PORT || 80;
 var base_url = process.env.BASE_URL || 'http://localhost/middleoffice';
-var api_url = base_url + '/api/requests';
+var apiux_url = base_url + '/api/ux/requests';
 
 app.get('*', function(req, res) {
     console.log(req);
@@ -14,7 +14,7 @@ app.get('*', function(req, res) {
         +'<body>'
         +'<h1>List of requests to be voted</h1>'
         +'<ul>';
-    content += '<li><a href="' + api_url + '/id/vote">Demande bidon</a></li>'
+    content += '<li><a href="' + apiux_url + '/id/vote">Demande bidon</a></li>'
     content += '</ul>'
         +'</body>'
         +'</html>';

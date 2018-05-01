@@ -15,7 +15,7 @@ app.get('*', function(req, res) {
     +'<div class="col-sm-5">'
     +'<form method="POST" action="' + api_url + '">'
     +'<div class="form-group">'
-    +'<input type="text" class="form-control input-lg" placeholder="Request type (use code)" name="code" required></input>'
+    +'<input type="text" class="form-control input-lg" placeholder="Request type (use code)" name="type" required></input>'
     +'<input type="textarea" class="form-control input-lg" placeholder="Text description of the request" name="summary"></input>'
     +'<input type="textarea" class="form-control input-lg" placeholder="Electronic description of the request (JSON, XML or other text formats)" name="payload"></input>'
     +'<button type="submit" class="btn btn-primary btn-lg">Submit</button>'

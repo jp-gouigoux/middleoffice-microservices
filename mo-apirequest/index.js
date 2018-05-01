@@ -11,38 +11,38 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.get('/api/requesttypes', function(req, res) {
+app.get('/api/requests', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            // TODO : remove stringify if the following API confirms it is useless
-            var myJson = JSON.stringify(db.collection('requesttypes').find({}).toArray(function (error, results) {
+            db.collection('requests').find({}).toArray(function (error, results) {
                 if (error) {
-                    console.log('Unable to retrieve request types from MongoDB collection: ', error);
+                    console.log('Unable to retrieve requests from MongoDB collection: ', error);
                     res.status(500).end();
                 } else {
+                    // TODO : pagination management
                     res.contentType('application/json');
                     res.status(200);
                     res.json(results);
                 }
-            }));
+            });
         }
     });
   });
 
-app.get('/api/requesttypes/{id}', function(req, res) {
+app.get('/api/requests/{id}', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            db.collection('requesttypes').findOne({ _id: req.params.id }, function (error, result) {
+            db.collection('requests').findOne({ _id: req.params.id }, function (error, result) {
                 if (error) {
-                    console.log('Unable to retrieve request type ' + req.params.id + ' from MongoDB collection: ', error);
+                    console.log('Unable to retrieve request ' + req.params.id + ' from MongoDB collection: ', error);
                     res.status(500).end();
                 } else {
                     res.contentType('application/json');
@@ -54,32 +54,25 @@ app.get('/api/requesttypes/{id}', function(req, res) {
     });
 });
 
-app.post('/api/requesttypes', function(req, res) {
+app.post('/api/requests', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            var requesttype = { 
-                code: req.body.code,
-                possibleVotes: [{
-                    code: req.body.vote1,
-                    title: [{ lang: 'fr-FR', value: req.body.vote1}],
-                    actions: req.body.url1.length == 0 ? [] : [{ type: 'webcall', link: { href: req.body.url1, method: 'POST', body: '{payload}' }}]
-                },{
-                    code: req.body.vote2,
-                    title: [{ lang: 'fr-FR', value: req.body.vote2}],
-                    actions: req.body.url2.length == 0 ? [] : [{ type: 'webcall', link: { href: req.body.url2, method: 'POST', body: '{payload}' }}]
-                }]
+            var request = {
+                type: req.type,
+                summary: req.summary,
+                payload: req.payload
             };
-            db.collection('requesttypes').insertOne(requesttype, function(error, result) {
+            db.collection('requests').insertOne(requesttype, function(error, result) {
                 if (error) {
-                    console.log('Error in inserting request type into MongoDB collection: ', error);
+                    console.log('Error in inserting request into MongoDB collection: ', error);
                     res.status(500).end();
                 } else {
                     db.close();
-                    console.log('A request type has been inserted');
+                    console.log('A request has been inserted');
                     // TODO : Add a Location header, using an environment variable for base URL
                     res.status(203);
                     res.end();
