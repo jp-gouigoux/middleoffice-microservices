@@ -7,7 +7,11 @@ var requesttypes_url = base_url + '/api/requesttypes/{code}';
 const request = require('request');
 
 app.get('*', function(req, res) {
-    var requestobject_url = base_url + req.header('X-Forwarded-Prefix').replace('/vote', '').replace('/ux', ''); // TODO : Make this construction less dependent from UX URLs by directly extracting the request id
+    var initialURL = req.header('X-Forwarded-Prefix');
+    var arr = initialURL.replace('/vote', '').split('/');
+    var requestId = arr[arr.length - 1];
+    var requestobject_url = base_url + '/api/requests/' + requestId;
+    //var requestobject_url = base_url + req.header('X-Forwarded-Prefix').replace('/vote', '').replace('/ux', ''); // TODO : Make this construction less dependent from UX URLs by directly extracting the request id
     console.log('requestobject_url: ' + requestobject_url);
     request(requestobject_url, { json: true }, function(error, result, body) {
         if (error) {
@@ -22,7 +26,7 @@ app.get('*', function(req, res) {
                 +'<body>'
                 +'<h1>Please provide your vote for the following request</h1>'
                 +'<div class="col-sm-5">'
-                +'<form method="POST" action="' + api_url.replace('{id}', req.params.id) + '">'
+                +'<form method="POST" action="' + api_url.replace('{id}', requestId) + '">'
                 +'<div class="form-group">'
                 +'<input type="text" class="form-control input-lg" name="id" value="' + body._id + '" readonly></input>'
                 +'<input type="text" class="form-control input-lg" name="type" value="' + body.type + '" readonly></input>'
