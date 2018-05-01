@@ -20,11 +20,9 @@ app.get('*', function(req, res) {
             console.log('Error while calling ' + requestslist_url + ': ', error);
             res.status(500).end();
         } else {
-            console.log(body);
-            var liste = JSON.parse(body);
-            liste.array.forEach(element => {
-                content += '<li><a href="' + apiux_url + '/' + element._id + '/vote">Demande bidon</a></li>';
-            });
+            for (i = 0; i < body.length; i++) {
+                content += '<li><a href="' + apiux_url + '/' + body[i]._id + '/vote">' + body[i].summary + '</a></li>';
+            }
             content += '</ul>'
                 +'</body>'
                 +'</html>';
