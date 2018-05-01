@@ -24,7 +24,7 @@ app.get('/api/requests', function(req, res) {
             // use is to list the ones that require a vote; a modification could be made to accept a URL
             // parameter, but one should then check that the frontend definitions in Traefik allow this
             // (actually, it should, otherwise the coupling should be analysed again for reduction)
-            db.collection('requests').find({ voted: false}).toArray(function (error, results) {
+            db.collection('requests').find({ $or:[{voted: false},{voted:undefined}]}).toArray(function (error, results) {
                 if (error) {
                     console.log('Unable to retrieve requests from MongoDB collection: ', error);
                     res.status(500).end();
