@@ -23,6 +23,7 @@ app.post('/api/requests/:id/vote', function(req, res) {
                 if (result.length > 0) {
                     res.status(403).send('Request has already been voted');
                 } else {
+                    var momentTraitementVote = new Date();
                     var vote = { 
                         request: {
                             href: base_url + '/api/requests/' + req.params.id,
@@ -31,9 +32,10 @@ app.post('/api/requests/:id/vote', function(req, res) {
                         },
                         choice: req.body.code,
                         author: {
-                            displayName: 'Unknown'
+                            displayName: 'Unknown' // TODO : connect to identification once authentication will be plugged
                         },
-                        date: Date.now().toISOString() // ISO 8601
+                        date: momentTraitementVote.toISOString(), // ISO 8601
+                        timestamp: momentTraitementVote.getTime() // Partial redundancy with previous parameter, but the uses are different : first one is for business information, whereas second one is there to prevent race condition on two votes for the same request
                     };
                     db.collection('votes').insertOne(vote, function(insertError, insertResult) {
                         if (error) {
