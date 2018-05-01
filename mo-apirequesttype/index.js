@@ -43,11 +43,11 @@ app.post('/api/requesttypes/', function(req, res) {
                 code: req.body.code,
                 possibleVotes: [{
                     code: req.body.vote1,
-                    title: [{ lang: 'fr-FR', value=req.body.vote1}],
+                    title: [{ lang: 'fr-FR', value: req.body.vote1}],
                     actions: req.body.url1.length == 0 ? [] : [{ type: 'webcall', link: { href: req.body.url1, method: 'POST', body: '{payload}' }}]
                 },{
                     code: req.body.vote2,
-                    title: [{ lang: 'fr-FR', value=req.body.vote2}],
+                    title: [{ lang: 'fr-FR', value: req.body.vote2}],
                     actions: req.body.url2.length == 0 ? [] : [{ type: 'webcall', link: { href: req.body.url2, method: 'POST', body: '{payload}' }}]
                 }]
             };
