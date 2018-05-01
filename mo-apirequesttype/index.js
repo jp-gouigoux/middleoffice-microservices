@@ -34,16 +34,16 @@ app.get('/api/requesttypes', function(req, res) {
     });
   });
 
-app.get('/api/requesttypes/{id}', function(req, res) {
+app.get('/api/requesttypes/:code', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            db.collection('requesttypes').findOne({ _id: req.params.id }, function (error, result) {
+            db.collection('requesttypes').findOne({ code: req.params.code }, function (error, result) {
                 if (error) {
-                    console.log('Unable to retrieve request type ' + req.params.id + ' from MongoDB collection: ', error);
+                    console.log('Unable to retrieve request type ' + req.params.code + ' from MongoDB collection: ', error);
                     res.status(500).end();
                 } else {
                     res.contentType('application/json');

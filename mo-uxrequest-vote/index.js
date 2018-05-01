@@ -3,7 +3,7 @@ var app = express();
 var port = process.env.PORT || 80;
 var base_url = process.env.BASE_URL || 'http://localhost/middleoffice';
 var api_url = base_url + '/api/requests/{id}/vote';
-var requesttypes_url = base_url + '/api/requesttypes/{id}';
+var requesttypes_url = base_url + '/api/requesttypes/{code}';
 const request = require('request');
 
 app.get('*', function(req, res) {
@@ -28,7 +28,8 @@ app.get('*', function(req, res) {
                 +'<input type="text" class="form-control input-lg" name="type" readonly>' + body.type + '</input>'
                 +'<input type="textarea" class="form-control input-lg" name="summary" readonly>' + body.summary + '</input>'
                 +'<input type="textarea" class="form-control input-lg" name="payload" readonly>' + body.payload + '</input>';
-            var requesttypeobject_url = requesttypes_url.replace('{id}', body.type);
+            var requesttypeobject_url = requesttypes_url.replace('{code}', body.type);
+            console.log('requesttypeobject_url: ' + requesttypeobject_url);
             request(requesttypeobject_url, { json: true}, function(rterror, rtresult, rtbody) {
                 if (rterror) {
                     console.log('Error while calling ' + requesttypeobject_url + ': ', rterror);
