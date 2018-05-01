@@ -84,7 +84,7 @@ app.post('/api/requesttypes', function(req, res) {
                     res.status(203);
                     // TODO : Could point to the entity just created, if it suits better the UX
                     // TODO : In an iFrame approach, could point back to the list, which would be in the same UI in this case
-                    res.send('<html><body><h1>Done !</h1><p>Click <a href="' + base_url + '">here</a> to go back to main menu</p></body></html>');
+                    res.send('<html><head><link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"></head><body><h1>Done !</h1><p>Click <a href="' + base_url + '">here</a> to go back to main menu</p></body></html>');
                 }
             });
         }
