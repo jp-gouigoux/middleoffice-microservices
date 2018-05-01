@@ -80,7 +80,7 @@ app.patch('/api/requests/:id', function(req, res) {
                 } else {
                     console.log('result before patch: ' + JSON.stringify(result));
                     console.log('patch value: ' + JSON.stringify(req.body));
-                    //jsonpatch.apply(result, req.body);
+                    jsonpatch.apply(result, req.body);
                     console.log('patched request: ' + JSON.stringify(result));
                     db.collection('requests').update({ "_id": mongodb.ObjectId(req.params.id) }, result, function (updateError, updateResult) {
                         if (updateError) {
