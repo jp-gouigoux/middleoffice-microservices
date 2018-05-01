@@ -51,7 +51,7 @@ services:
     build: ./mo-apirequesttype
     container_name: mo-apirequesttype
     labels:
-      traefik.frontend.rule: "Path: /api/requesttypes, /api/requests/{code}"
+      traefik.frontend.rule: "Path: /api/requesttypes, /api/requests/{code:[\w]+}"
       traefik.port: "80"
     links:
       - mongodb:mongodb
