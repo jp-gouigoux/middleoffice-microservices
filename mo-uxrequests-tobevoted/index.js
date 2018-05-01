@@ -3,7 +3,7 @@ var app = express();
 var port = process.env.PORT || 80;
 var base_url = process.env.BASE_URL || 'http://localhost/middleoffice';
 var apiux_url = base_url + '/api/ux/requests';
-const request = require(request);
+const request = require('request');
 
 app.get('*', function(req, res) {
     console.log(req); // TODO : If possible, retrieve APIUX_URL from current URL

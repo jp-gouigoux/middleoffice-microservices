@@ -4,7 +4,7 @@ var port = process.env.PORT || 80;
 var base_url = process.env.BASE_URL || 'http://localhost/middleoffice';
 var api_url = base_url + '/api/requests/{id}/vote';
 var requesttypes_url = base_url + '/api/requesttypes/{id}';
-const request = require(request);
+const request = require('request');
 
 app.get('*', function(req, res) {
     console.log('URL called is ' + req.url);
