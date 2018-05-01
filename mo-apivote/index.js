@@ -19,15 +19,15 @@ app.post('/api/requests/:id/vote', function(req, res) {
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            db.collection('votes').find({ "request.id": req.id }, { _id: 1 }).toArray(function(error, result) {
+            db.collection('votes').find({ "request.id": req.params.id }, { _id: 1 }).toArray(function(error, result) {
                 if (result.length > 0) {
                     res.status(403).send('Request has already been voted');
                 } else {
                     var vote = { 
                         request: {
-                            href: base_url + '/api/requests/' + req.id,
-                            title: 'Request ' + req.id,
-                            id: req.id
+                            href: base_url + '/api/requests/' + req.params.id,
+                            title: 'Request ' + req.params.id,
+                            id: req.params.id
                         },
                         choice: req.body.code,
                         author: {
