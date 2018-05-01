@@ -78,10 +78,10 @@ app.patch('/api/requests/:id', function(req, res) {
                 } else if (result == null) {
                     res.status(404).send('Request ' + req.params.id + ' does not exist'); // TODO : create a generic 404 page with Bootstrap
                 } else {
-                    console.log('result before patch: ' + result);
-                    console.log('patch value: ' + req.body);
+                    console.log('result before patch: ' + JSON.stringify(result);
+                    console.log('patch value: ' + JSON.stringify(req.body));
                     //jsonpatch.apply(result, req.body);
-                    console.log('patched request: ' + result);
+                    console.log('patched request: ' + JSON.stringify(result));
                     db.collection('requests').update({ "_id": mongodb.ObjectId(req.params.id) }, result, function (updateError, updateResult) {
                         if (updateError) {
                             console.log('Unable to update request ' + req.params.id + ' from MongoDB collection: ', updateError);
