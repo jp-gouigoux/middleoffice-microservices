@@ -5,6 +5,7 @@ var mongodb = require('mongodb');
 var mongo_url = process.env.MONGO_URL || 'mongodb://localhost:27017/middleoffice';
 var MongoClient = mongodb.MongoClient;
 var base_url = process.env.BASE_URL || 'http://localhost/middleoffice/';
+var jsonpatch = require('json-patch');
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // parse application/json
@@ -32,7 +33,7 @@ app.get('/api/requests', function(req, res) {
             });
         }
     });
-  });
+});
 
 app.get('/api/requests/:id', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
@@ -51,6 +52,39 @@ app.get('/api/requests/:id', function(req, res) {
                     res.contentType('application/json');
                     res.status(200);
                     res.json(result);
+                }
+            });
+        }
+    });
+});
+
+app.patch('/api/requests/:id', function(req, res) {
+    // TODO : replace this implementation that might lose data in a case of race condition by the storing of all patches
+    // and the independent consolidation of all those patches with a value date
+    MongoClient.connect(mongo_url, function (err, db) {
+        if (err) {
+            console.log('Unable to connect to the MongoDB server: ', err);
+            res.status(500).end();
+        } else {
+            console.log('Connected to MongoDB server');
+            db.collection('requests').findOne({ "_id": mongodb.ObjectId(req.params.id) }, function (error, result) {
+                if (error) {
+                    console.log('Unable to retrieve request ' + req.params.id + ' from MongoDB collection: ', error);
+                    res.status(500).end();
+                } else if (result == null) {
+                    res.status(404).send('Request ' + req.params.id + ' does not exist'); // TODO : create a generic 404 page with Bootstrap
+                } else {
+                    jsonpatch.apply(result, req.body);
+                    console.log('patched request: ' + result);
+                    db.collection('requests').update({ "_id": mongodb.ObjectId(req.params.id) }, result, function (updateError, updateResult) {
+                        if (updateError) {
+                            console.log('Unable to update request ' + req.params.id + ' from MongoDB collection: ', updateError);
+                            res.status(500).end();
+                        } else {
+                            res.status(204);
+                            res.end();
+                        }
+                    });
                 }
             });
         }

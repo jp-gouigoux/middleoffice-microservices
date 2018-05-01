@@ -12,6 +12,7 @@
     "dependencies" : {
       "express"         : "~4.16.2",
       "mongodb"         : "~2.2.22",
-      "body-parser"     : "~1.18.2"
+      "body-parser"     : "~1.18.2",
+      "json-patch"      : "0.7.0"
     }
   }
