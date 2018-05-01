@@ -62,9 +62,9 @@ app.post('/api/requests', function(req, res) {
         } else {
             console.log('Connected to MongoDB server');
             var request = {
-                type: req.type,
-                summary: req.summary,
-                payload: req.payload
+                type: req.body.type,
+                summary: req.body.summary,
+                payload: req.body.payload
             };
             db.collection('requests').insertOne(request, function(error, result) {
                 if (error) {
