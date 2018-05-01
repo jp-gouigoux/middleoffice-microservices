@@ -66,7 +66,7 @@ app.post('/api/requests', function(req, res) {
                 summary: req.summary,
                 payload: req.payload
             };
-            db.collection('requests').insertOne(requesttype, function(error, result) {
+            db.collection('requests').insertOne(request, function(error, result) {
                 if (error) {
                     console.log('Error in inserting request into MongoDB collection: ', error);
                     res.status(500).end();
