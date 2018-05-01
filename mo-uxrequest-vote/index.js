@@ -24,10 +24,10 @@ app.get('*', function(req, res) {
                 +'<div class="col-sm-5">'
                 +'<form method="POST" action="' + api_url.replace('{id}', req.params.id) + '">'
                 +'<div class="form-group">'
-                +'<input type="text" class="form-control input-lg" name="id" readonly>' + body._id + '</input>'
-                +'<input type="text" class="form-control input-lg" name="type" readonly>' + body.type + '</input>'
-                +'<input type="textarea" class="form-control input-lg" name="summary" readonly>' + body.summary + '</input>'
-                +'<input type="textarea" class="form-control input-lg" name="payload" readonly>' + body.payload + '</input>';
+                +'<input type="text" class="form-control input-lg" name="id" value="' + body._id + '" readonly></input>'
+                +'<input type="text" class="form-control input-lg" name="type" value="' + body.type + '" readonly></input>'
+                +'<input type="textarea" class="form-control input-lg" name="summary" value="' + body.summary + '" readonly></input>'
+                +'<input type="textarea" class="form-control input-lg" name="payload" value="' + body.payload + '" readonly></input>';
             var requesttypeobject_url = requesttypes_url.replace('{code}', body.type);
             console.log('requesttypeobject_url: ' + requesttypeobject_url);
             request(requesttypeobject_url, { json: true}, function(rterror, rtresult, rtbody) {
