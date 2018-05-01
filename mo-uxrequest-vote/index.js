@@ -7,8 +7,9 @@ var requesttypes_url = base_url + '/api/requesttypes/{id}';
 const request = require('request');
 
 app.get('*', function(req, res) {
-    console.log('URL called is ' + req.url);
+    console.log('URL called is ' + req.url); // Always / since Traefik reroutes, but the X-Forwarder header could help find the original URL
     var requestobject_url = req.url.replace('/vote', '');
+    console.log('requestobject_url: ' + requestobject_url);
     request(requestobject_url, { json: true }, function(error, result, body) {
         if (error) {
             console.log('Error retrieving request to be voted by calling ' + requestobject_url + ': ', error);
