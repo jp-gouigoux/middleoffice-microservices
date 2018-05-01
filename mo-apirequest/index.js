@@ -20,7 +20,11 @@ app.get('/api/requests', function(req, res) {
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
-            db.collection('requests').find({}).toArray(function (error, results) {
+            // TODO : for now, we do not provide any way to retrieve a complete list of requests, as the only
+            // use is to list the ones that require a vote; a modification could be made to accept a URL
+            // parameter, but one should then check that the frontend definitions in Traefik allow this
+            // (actually, it should, otherwise the coupling should be analysed again for reduction)
+            db.collection('requests').find({ voted: false}).toArray(function (error, results) {
                 if (error) {
                     console.log('Unable to retrieve requests from MongoDB collection: ', error);
                     res.status(500).end();

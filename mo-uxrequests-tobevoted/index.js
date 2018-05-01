@@ -14,6 +14,9 @@ app.get('*', function(req, res) {
         +'<body>'
         +'<h1>List of requests to be voted</h1>'
         +'<ul>';
+    // TODO : if the "voted" parameter on the request was to disappear because consistency is found to be better
+    // done by reading votes only, then the following should rather retrieve the date from a consolidated index
+    // in the manner of CQRS views, with one of them grouping requests and votes information
     var requestslist_url = base_url + '/api/requests';
     request(requestslist_url, { json: true}, function(error, result, body) {
         if (error) {
