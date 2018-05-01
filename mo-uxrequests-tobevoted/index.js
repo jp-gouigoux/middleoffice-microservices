@@ -6,7 +6,6 @@ var apiux_url = base_url + '/api/ux/requests';
 const request = require('request');
 
 app.get('*', function(req, res) {
-    console.log(req); // TODO : If possible, retrieve APIUX_URL from current URL
     var content = '<html>'
         +'<head>'
         +'<title>MiddleOffice - Requests to be voted</title>'
@@ -21,6 +20,7 @@ app.get('*', function(req, res) {
             console.log('Error while calling ' + requestslist_url + ': ', error);
             res.status(500).end();
         } else {
+            console.log(body);
             var liste = JSON.parse(body);
             liste.array.forEach(element => {
                 content += '<li><a href="' + apiux_url + '/' + element._id + '/vote">Demande bidon</a></li>';
