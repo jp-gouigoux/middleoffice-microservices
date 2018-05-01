@@ -29,18 +29,17 @@ services:
       timeout: 5s
       retries: 20
   
-  mo-apivote:
-    image: jpgouigoux/mo-apivote:0.1
-    build: ./mo-apivote
-    container_name: mo-apivote
+  mo-apirequest:
+    image: jpgouigoux/mo-apirequest:0.1
+    build: ./mo-apirequest
+    container_name: mo-apirequest
     labels:
-      traefik.frontend.rule: "PathPrefix:/api/requests/{id}/vote"
+      traefik.frontend.rule: "PathPrefix:/api/requests"
       traefik.port: "80"
     links:
       - mongodb:mongodb
     environment:
       - MONGO_URL=mongodb://mongodb:27017/middleoffice
-      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
     restart: on-failure
     depends_on:
       elasticsearch:
@@ -57,6 +56,23 @@ services:
       - mongodb:mongodb
     environment:
       - MONGO_URL=mongodb://mongodb:27017/middleoffice
+    restart: on-failure
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  mo-apivote:
+    image: jpgouigoux/mo-apivote:0.1
+    build: ./mo-apivote
+    container_name: mo-apivote
+    labels:
+      traefik.frontend.rule: "PathPrefix:/api/requests/{id}/vote"
+      traefik.port: "80"
+    links:
+      - mongodb:mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/middleoffice
+      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
     restart: on-failure
     depends_on:
       elasticsearch:
