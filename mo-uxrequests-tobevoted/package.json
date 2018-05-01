@@ -1,5 +1,5 @@
 {
-    "name"         : "mo-uxrequesttype",
+    "name"         : "mo-uxrequests-tobevoted",
     "version"      : "0.0.1",
     "description"  : "Middle Office, UX for request lists",
     "main"         : "index.js",
