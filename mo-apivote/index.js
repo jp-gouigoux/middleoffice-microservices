@@ -35,11 +35,22 @@ app.post('/api/requests/{id}/vote', function(req, res) {
                         },
                         date: Date.now().toISOString() // ISO 8601
                     };
-
+                    db.collection('votes').insertOne(vote, function(insertError, insertResult) {
+                        if (error) {
+                            console.log('Error in recording vote into MongoDB collection: ', insertError);
+                            res.status(500).end();
+                        } else {
+                            db.close();
+                            console.log('A vote has been inserted');
+                            // TODO : Add a Location header, using an environment variable for base URL
+                            res.status(203);
+                            res.end();
+                        }
+                    });        
                 }
             });
         }
-    });  
+    });
 });
 
 app.listen(port);
