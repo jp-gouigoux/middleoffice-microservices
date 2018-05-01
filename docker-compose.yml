@@ -34,7 +34,7 @@ services:
     build: ./mo-apirequest
     container_name: mo-apirequest
     labels:
-      traefik.frontend.rule: "Path:/api/requests"
+      traefik.frontend.rule: "Path:/api/requests,/api/requests/{id:[0-9a-z]+}"
       traefik.port: "80"
     links:
       - mongodb:mongodb
