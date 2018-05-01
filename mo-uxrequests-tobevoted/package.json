@@ -10,6 +10,7 @@
       "url" : "git://github.com/jp-gouigoux/middleoffice-microservices.git"
     },
     "dependencies" : {
-      "express" : "~4.16.2"
+      "express" : "~4.16.2",
+      "request" : "2.85.0"
     }
   }
