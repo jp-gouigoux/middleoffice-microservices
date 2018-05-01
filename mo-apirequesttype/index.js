@@ -18,9 +18,10 @@ app.get('/api/requesttypes', function(req, res) {
             res.status(500).end();
         } else {
             console.log('Connected to MongoDB server');
+            // TODO : enlever le stringify qui ne sert normalement à rien, si vérifié avec l'API suivante
             var myJson = JSON.stringify(db.collection('requesttypes').find({}).toArray(function (error, results) {
                 if (error) {
-                    console.log('Unable to retrieve request types from MongoDB collection: ', err);
+                    console.log('Unable to retrieve request types from MongoDB collection: ', error);
                     res.status(500).end();
                 } else {
                     res.contentType('application/json');
@@ -31,6 +32,27 @@ app.get('/api/requesttypes', function(req, res) {
         }
     });
   });
+
+app.get('/api/requesttypes/{id}', function(req, res) {
+    MongoClient.connect(mongo_url, function (err, db) {
+        if (err) {
+            console.log('Unable to connect to the MongoDB server: ', err);
+            res.status(500).end();
+        } else {
+            console.log('Connected to MongoDB server');
+            db.collection('requesttypes').findOne({ _id: req.params.id }, function (error, result) {
+                if (error) {
+                    console.log('Unable to retrieve request type ' + req.params.id + ' from MongoDB collection: ', error);
+                    res.status(500).end();
+                } else {
+                    res.contentType('application/json');
+                    res.status(200);
+                    res.json(result);
+                }
+            });
+        }
+    });
+});
 
 app.post('/api/requesttypes', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {

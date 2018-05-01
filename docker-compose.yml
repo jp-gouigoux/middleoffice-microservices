@@ -71,6 +71,39 @@ services:
       traefik.port: "80"
     restart: on-failure
     
+  mo-uxrequest:
+    image: jpgouigoux/mo-uxrequest:0.1
+    build: ./mo-uxrequest
+    container_name: mo-uxrequest
+    labels:
+      traefik.frontend.rule: "PathPrefixStrip:/api/ux/request"
+      traefik.port: "80"
+    environment:
+      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+    restart: on-failure
+
+  mo-uxrequest-vote:
+    image: jpgouigoux/mo-uxrequest-vote:0.1
+    build: ./mo-uxrequest-vote
+    container_name: mo-uxrequest-vote
+    labels:
+      traefik.frontend.rule: "PathPrefixStripRegex:/api/ux/requests/{id}/vote"
+      traefik.port: "80"
+    environment:
+      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+    restart: on-failure
+
+  mo-uxrequest-tobevoted:
+    image: jpgouigoux/mo-uxrequest-tobevoted:0.1
+    build: ./mo-uxrequest-tobevoted
+    container_name: mo-uxrequest-tobevoted
+    labels:
+      traefik.frontend.rule: "PathPrefixStrip:/api/ux/requests"
+      traefik.port: "80"
+    environment:
+      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+    restart: on-failure
+
   mo-uxrequesttype:
     image: jpgouigoux/mo-uxrequesttype:0.1
     build: ./mo-uxrequesttype

@@ -4,8 +4,6 @@ var port = process.env.PORT || 80;
 var base_url = process.env.BASE_URL || 'http://localhost/middleoffice';
 var api_url = base_url + '/api/requesttypes';
 
-app.use(express.static(__dirname + '/public'));
-
 app.get('*', function(req, res) {
     res.send('<html>'
     +'<head>'
@@ -16,12 +14,12 @@ app.get('*', function(req, res) {
     +'<div class="col-sm-5">'
     +'<form method="POST" action="' + api_url + '">'
     +'<div class="form-group">'
-    +'<input type="text" class="form-control input-lg" placeholder="Request type code" name="code"></input>'
-    +'<input type="text" class="form-control input-lg" placeholder="Label for vote #1" name="vote1"></input>'
+    +'<input type="text" class="form-control input-lg" placeholder="Request type code" name="code" required></input>'
+    +'<input type="text" class="form-control input-lg" placeholder="Label for vote #1" name="vote1" required></input>'
     +'<input type="text" class="form-control input-lg" placeholder="URL to call upon vote #1" name="url1"></input>'
-    +'<input type="text" class="form-control input-lg" placeholder="Label for vote #2" name="vote2"></input>'
+    +'<input type="text" class="form-control input-lg" placeholder="Label for vote #2" name="vote2" required></input>'
     +'<input type="text" class="form-control input-lg" placeholder="URL to call upon vote #2" name="url2"></input>'
-    +'<button type="submit" class="btn btn-primary btn-lg">Enregistrer</button>'
+    +'<button type="submit" class="btn btn-primary btn-lg">Record</button>'
     +'</div>'
     +'</form>'
     +'</div>'
