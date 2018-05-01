@@ -1,7 +1,8 @@
 var express  = require('express');
 var app = express();
 var port = process.env.PORT || 80;
-var urlapi = process.env.URLAPI || '/api/requesttypes';
+var base_url = process.env.BASE_URL || 'http://localhost/middleoffice';
+var api_url = base_url + '/api/requesttypes';
 
 app.use(express.static(__dirname + '/public'));
 
@@ -13,7 +14,7 @@ app.get('*', function(req, res) {
     +'</head>'
     +'<body>'
     +'<div class="col-sm-5">'
-    +'<form method="POST" action="' + urlapi + '">'
+    +'<form method="POST" action="' + api_url + '">'
     +'<div class="form-group">'
     +'<input type="text" class="form-control input-lg" placeholder="Request type code" name="code"></input>'
     +'<input type="text" class="form-control input-lg" placeholder="Label for vote #1" name="vote1"></input>'

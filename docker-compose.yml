@@ -29,23 +29,29 @@ services:
       timeout: 5s
       retries: 20
   
-  mo-uxrequesttype:
-    image: jpgouigoux/mo-uxrequesttype:0.1
-    build: ./mo-uxrequesttype
-    container_name: mo-uxrequesttype
+  mo-apivote:
+    image: jpgouigoux/mo-apivote:0.1
+    build: ./mo-apivote
+    container_name: mo-apivote
     labels:
-      traefik.frontend.rule: "PathPrefixStrip:/api/ux/requesttype/"
+      traefik.frontend.rule: "PathPrefix:/api/requests/{id}/vote"
       traefik.port: "80"
+    links:
+      - mongodb:mongodb
     environment:
-      - URLAPI=http://imta.westeurope.cloudapp.azure.com/api/requesttypes/
+      - MONGO_URL=mongodb://mongodb:27017/middleoffice
+      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
     restart: on-failure
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
 
   mo-apirequesttype:
     image: jpgouigoux/mo-apirequesttype:0.1
     build: ./mo-apirequesttype
     container_name: mo-apirequesttype
     labels:
-      traefik.frontend.rule: "PathPrefix:/api/requesttypes/"
+      traefik.frontend.rule: "PathPrefix:/api/requesttypes"
       traefik.port: "80"
     links:
       - mongodb:mongodb
@@ -55,6 +61,26 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
+
+  mo-portal:
+    image: jpgouigoux/mo-portal:0.1
+    build: ./mo-portal
+    container_name: mo-portal
+    labels:
+      traefik.frontend.rule: "Path:/"
+      traefik.port: "80"
+    restart: on-failure
+    
+  mo-uxrequesttype:
+    image: jpgouigoux/mo-uxrequesttype:0.1
+    build: ./mo-uxrequesttype
+    container_name: mo-uxrequesttype
+    labels:
+      traefik.frontend.rule: "PathPrefixStrip:/api/ux/requesttype"
+      traefik.port: "80"
+    environment:
+      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+    restart: on-failure
 
 volumes:
   mongodata:

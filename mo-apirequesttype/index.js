@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.get('/api/requesttypes/', function(req, res) {
+app.get('/api/requesttypes', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
@@ -32,7 +32,7 @@ app.get('/api/requesttypes/', function(req, res) {
     });
   });
 
-app.post('/api/requesttypes/', function(req, res) {
+app.post('/api/requesttypes', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);
