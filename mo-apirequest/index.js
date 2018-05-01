@@ -46,6 +46,8 @@ app.get('/api/requests/:id', function(req, res) {
                 if (error) {
                     console.log('Unable to retrieve request ' + req.id + ' from MongoDB collection: ', error);
                     res.status(500).end();
+                } else if (result == null) {
+                    res.status(404).send('Request ' + req.id + ' does not exist');
                 } else {
                     res.contentType('application/json');
                     res.status(200);
