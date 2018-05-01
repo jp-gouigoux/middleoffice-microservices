@@ -94,7 +94,7 @@ services:
     build: ./mo-uxrequest
     container_name: mo-uxrequest
     labels:
-      traefik.frontend.rule: "PathPrefixStrip:/api/ux/request"
+      traefik.frontend.rule: "PathStrip:/api/ux/request"
       traefik.port: "80"
     environment:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com
@@ -105,7 +105,7 @@ services:
     build: ./mo-uxrequest-vote
     container_name: mo-uxrequest-vote
     labels:
-      traefik.frontend.rule: "PathPrefixStripRegex:/api/ux/requests/{id}/vote"
+      traefik.frontend.rule: "PathStripRegex:/api/ux/requests/{id:[0-9a-z]+}/vote"
       traefik.port: "80"
     environment:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com
@@ -116,7 +116,7 @@ services:
     build: ./mo-uxrequests-tobevoted
     container_name: mo-uxrequests-tobevoted
     labels:
-      traefik.frontend.rule: "PathPrefixStrip:/api/ux/requests"
+      traefik.frontend.rule: "PathStrip:/api/ux/requests"
       traefik.port: "80"
     environment:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com
@@ -127,7 +127,7 @@ services:
     build: ./mo-uxrequesttype
     container_name: mo-uxrequesttype
     labels:
-      traefik.frontend.rule: "PathPrefixStrip:/api/ux/requesttype"
+      traefik.frontend.rule: "PathStrip:/api/ux/requesttype"
       traefik.port: "80"
     environment:
       - BASE_URL=http://imta.westeurope.cloudapp.azure.com
