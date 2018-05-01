@@ -45,7 +45,8 @@ app.post('/api/requests/:id/vote', function(req, res) {
                                 // Considering the request as voted before sending the vote is better for consistency,
                                 // as it is acceptable to lose a request if a race condition ever appears,
                                 // while the occurrence of two votes on a unique request should be an impossible event
-                                request(requestobject_url, { method: 'PATCH', json: true, body: [{ "op": "replace", "path": "/voted", "value": true }] }, function(patchError, patchResult, patchBody) {
+                                // TODO : check that the ADD operation does not fail is the VOTED attribute preexists
+                                request(requestobject_url, { method: 'PATCH', json: true, body: [{ "op": "add", "path": "/voted", "value": true }] }, function(patchError, patchResult, patchBody) {
                                     if (patchError) {
                                         console.log('Error while patching request as voted: ', patchError);
                                         res.status(500).end();
