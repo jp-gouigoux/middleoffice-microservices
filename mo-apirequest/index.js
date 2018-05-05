@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// TODO : as for every other service in the project, an Open API description should be added
+
 app.get('/api/requests', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
