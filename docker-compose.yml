@@ -4,7 +4,7 @@ services:
   traefik:
     image: traefik:1.5.4-alpine
     container_name: traefik
-    command: --web --docker --docker.domain=imta.westeurope.cloudapp.azure.com --logLevel=DEBUG
+    command: --web --docker --docker.domain=${MO_DOMAIN} --logLevel=DEBUG
     ports:
       - "80:80"
     volumes:
@@ -40,7 +40,7 @@ services:
       - mongodb:mongodb
     environment:
       - MONGO_URL=mongodb://mongodb:27017/middleoffice
-      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+      - BASE_URL=http://${MO_DOMAIN}
     restart: on-failure
     depends_on:
       elasticsearch:
@@ -57,7 +57,7 @@ services:
       - mongodb:mongodb
     environment:
       - MONGO_URL=mongodb://mongodb:27017/middleoffice
-      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+      - BASE_URL=http://${MO_DOMAIN}
     restart: on-failure
     depends_on:
       elasticsearch:
@@ -74,8 +74,8 @@ services:
       - mongodb:mongodb
     environment:
       - MONGO_URL=mongodb://mongodb:27017/middleoffice
-      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
-      - WEBHOOKS_EXECVOTE=[{\"topic\": \"POST+*/execvote\", \"callback\": \"/api/execvote\", \"method\": \"POST\" }]
+      - BASE_URL=http://${MO_DOMAIN}
+      - WEBHOOKS_EXECVOTE='[{"topic":"POST+*/execvote", "callback":"/api/execvote", "method":"POST"}]'
     restart: on-failure
     depends_on:
       elasticsearch:
@@ -98,7 +98,7 @@ services:
       traefik.frontend.rule: "PathStrip: /api/ux/request"
       traefik.port: "80"
     environment:
-      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+      - BASE_URL=http://${MO_DOMAIN}
     restart: on-failure
 
   mo-uxrequest-vote:
@@ -109,7 +109,7 @@ services:
       traefik.frontend.rule: "PathStripRegex: /api/ux/requests/{id:[0-9a-z]+}/vote"
       traefik.port: "80"
     environment:
-      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+      - BASE_URL=http://${MO_DOMAIN}
     restart: on-failure
 
   mo-uxrequests-tobevoted:
@@ -120,7 +120,7 @@ services:
       traefik.frontend.rule: "PathStrip: /api/ux/requests"
       traefik.port: "80"
     environment:
-      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+      - BASE_URL=http://${MO_DOMAIN}
     restart: on-failure
 
   mo-uxrequesttype:
@@ -131,7 +131,7 @@ services:
       traefik.frontend.rule: "PathStrip: /api/ux/requesttype"
       traefik.port: "80"
     environment:
-      - BASE_URL=http://imta.westeurope.cloudapp.azure.com
+      - BASE_URL=http://${MO_DOMAIN}
     restart: on-failure
 
 volumes:
