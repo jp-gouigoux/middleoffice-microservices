@@ -30,7 +30,7 @@ services:
       retries: 20
   
   mo-apirequest:
-    image: jpgouigoux/mo-apirequest:0.1
+    image: jpgouigoux/mo-apirequest
     build: ./mo-apirequest
     container_name: mo-apirequest
     labels:
@@ -47,7 +47,7 @@ services:
         condition: service_healthy
 
   mo-apirequesttype:
-    image: jpgouigoux/mo-apirequesttype:0.1
+    image: jpgouigoux/mo-apirequesttype
     build: ./mo-apirequesttype
     container_name: mo-apirequesttype
     labels:
@@ -64,7 +64,7 @@ services:
         condition: service_healthy
 
   mo-apivote:
-    image: jpgouigoux/mo-apivote:0.1
+    image: jpgouigoux/mo-apivote
     build: ./mo-apivote
     container_name: mo-apivote
     labels:
@@ -82,7 +82,7 @@ services:
         condition: service_healthy
 
   mo-portal:
-    image: jpgouigoux/mo-portal:0.1
+    image: jpgouigoux/mo-portal
     build: ./mo-portal
     container_name: mo-portal
     labels:
@@ -91,7 +91,7 @@ services:
     restart: on-failure
     
   mo-uxrequest:
-    image: jpgouigoux/mo-uxrequest:0.1
+    image: jpgouigoux/mo-uxrequest
     build: ./mo-uxrequest
     container_name: mo-uxrequest
     labels:
@@ -102,7 +102,7 @@ services:
     restart: on-failure
 
   mo-uxrequest-vote:
-    image: jpgouigoux/mo-uxrequest-vote:0.1
+    image: jpgouigoux/mo-uxrequest-vote
     build: ./mo-uxrequest-vote
     container_name: mo-uxrequest-vote
     labels:
@@ -113,7 +113,7 @@ services:
     restart: on-failure
 
   mo-uxrequests-tobevoted:
-    image: jpgouigoux/mo-uxrequests-tobevoted:0.1
+    image: jpgouigoux/mo-uxrequests-tobevoted
     build: ./mo-uxrequests-tobevoted
     container_name: mo-uxrequests-tobevoted
     labels:
@@ -124,7 +124,7 @@ services:
     restart: on-failure
 
   mo-uxrequesttype:
-    image: jpgouigoux/mo-uxrequesttype:0.1
+    image: jpgouigoux/mo-uxrequesttype
     build: ./mo-uxrequesttype
     container_name: mo-uxrequesttype
     labels:
