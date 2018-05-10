@@ -5,7 +5,7 @@ metadata:
   labels:
     app: mo-ux
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mo-ux
@@ -17,11 +17,14 @@ spec:
       containers:
       - name: mo-uxrequest
         image: jpgouigoux/mo-uxrequest
+        env:
+        - name: PORT
+          value: "81"
         ports:
-        - containerPort: 80
-          name: http1
+        - containerPort: 81
+          name: http81
       - name: mo-portal
         image: jpgouigoux/mo-portal
         ports:
         - containerPort: 80
-          name: http2
+          name: http
