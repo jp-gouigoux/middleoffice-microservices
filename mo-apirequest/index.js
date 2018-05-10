@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// TODO : base every NodeJS service on a node base image with express and mongo client to save bandwidth and compile time
+
 // TODO : as for every other service in the project, an Open API description should be added
 
 app.get('/api/requests', function(req, res) {
