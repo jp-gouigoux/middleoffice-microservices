@@ -1,39 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mo-ux
+  name: mo-ux-deployment
   labels:
-    mo-ux: true
+    app: mo-ux
 spec:
+  replicas: 3
   selector:
     matchLabels:
-      mo-ux: true
+      app: mo-ux
   template:
     metadata:
       labels:
-        mo-ux: true
+        app: mo-ux
     spec:
       containers:
       - name: mo-uxrequest
         image: jpgouigoux/mo-uxrequest
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
-          name: HTTP
-          protocol: TCP
-        resources:
-          requests:
-            cpu: 150m
-            memory: 20Mi
+          name: http1
       - name: mo-portal
         image: jpgouigoux/mo-portal
         ports:
-        - containerPort: 80            
-          name: HTTP
-          protocol: TCP        
-        resources:
-          limits:
-            memory: 170Mi
-          requests:
-            cpu: 100m
-            memory: 70Mi
+        - containerPort: 80
+          name: http2
