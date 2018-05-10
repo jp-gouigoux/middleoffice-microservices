@@ -1,38 +1,22 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: mo-ux
   labels:
-    ux-portal: true
-  name: ux-portal
-  namespace: middleoffice
+    mo-ux: true
 spec:
   selector:
     matchLabels:
-     ux-portal: true
+      mo-ux: true
   template:
     metadata:
       labels:
-        ux-portal: true
+        mo-ux: true
     spec:
       containers:
-      - args:
-        - 
-        image: jpgouigoux/mo-portal:0.18
+      - name: mo-uxrequest
+        image: jpgouigoux/mo-uxrequest
         imagePullPolicy: IfNotPresent
-        name: mo-portal
-        ports:
-        - containerPort: 80
-          name: HTTP
-          protocol: TCP
-        resources:
-          limits:
-            memory: 170Mi
-          requests:
-            cpu: 100m
-            memory: 70Mi
-        image: jpgouigoux/mo-uxrequest:0.1
-        imagePullPolicy: IfNotPresent
-        name: mo-uxrequest
         ports:
         - containerPort: 80
           name: HTTP
@@ -41,4 +25,15 @@ spec:
           requests:
             cpu: 150m
             memory: 20Mi
-      
+      - name: mo-portal
+        image: jpgouigoux/mo-portal
+        ports:
+        - containerPort: 80            
+          name: HTTP
+          protocol: TCP        
+        resources:
+          limits:
+            memory: 170Mi
+          requests:
+            cpu: 100m
+            memory: 70Mi
