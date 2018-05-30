@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-ingress
+  namespace: middleoffice
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: elastic.microservice.k8s.lab
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: elastic-service
+          servicePort: elastic
+  - host: traefik-ui.microservice.k8s.lab
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: traefik
+          servicePort: traefik-ui
+  - host: portal.microservice.k8s.lab
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mo-ux-service
+          servicePort: http
+    http:
+      paths:
+      - path: /api/requests, /api/requests/{id:[0-9a-z]+
+        backend:
+          serviceName: mo-api-service
+          servicePort: http81
+    http:
+      paths:
+      - path: /api/requeststype, /api/requesttypes/{code}
+        backend:
+          serviceName: mo-api-service
+          servicePort: http82
+    http:
+      paths:
+      - path: /api/requests/{id:[0-9a-z]+}/vote
+        backend:
+          serviceName: mo-api-service
+          servicePort: http         
+  - host: portal.microservice.k8s.lab
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mo-ux-service
+          servicePort: http

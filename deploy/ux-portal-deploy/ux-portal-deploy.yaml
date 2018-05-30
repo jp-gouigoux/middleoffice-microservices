@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mo-ux-deployment
+  namespace: middleoffice
   labels:
     app: mo-ux
 spec:
@@ -20,6 +21,8 @@ spec:
         env:
         - name: PORT
           value: "81"
+        - name: BASE_URL
+          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"         
         ports:
         - containerPort: 81
           name: http81
@@ -28,3 +31,33 @@ spec:
         ports:
         - containerPort: 80
           name: http
+      - name: mo-uxrequest-vote
+        image: jpgouigoux/mo-uxrequest-vote
+        env:
+        - name: PORT
+          value: "82"
+        - name: BASE_URL
+          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"          
+        ports:
+        - containerPort: 82
+          name: http82
+      - name: uxrequests-tobevoted
+        image: jpgouigoux/uxrequests-tobevoted
+        env:
+        - name: PORT
+          value: "83"
+        - name: BASE_URL
+          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"          
+        ports:
+        - containerPort: 83
+          name: http83
+      - name: mo-uxrequesttype
+        image: jpgouigoux/mo-uxrequesttype
+        env:
+        - name: PORT
+          value: "84" 
+        - name: BASE_URL
+          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"
+        ports:
+        - containerPort: 84
+          name: http84

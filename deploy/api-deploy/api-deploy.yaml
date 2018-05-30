@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mo-api-deployment
+  namespace: middleoffice
+  labels:
+    app: mo-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mo-api
+  template:
+    metadata:
+      labels:
+        app: mo-api
+    spec:
+      containers:
+      - name: mo-apirequest
+        image: jpgouigoux/mo-apirequest
+        env:
+        - name: PORT
+          value: "81"
+        - name: MONGO_URL
+          value: "mongodb://mongo-service.middleoffice.svc.cluster.local:27017/middleoffice"
+        - name: BASE_URL
+          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"
+        ports:
+        - containerPort: 81
+          name: http81
+      - name: mo-apirequesttype
+        image: jpgouigoux/mo-apirequesttype
+        env:
+        - name: MONGO_URL
+          value: "mongodb://mongo-service.middleoffice.svc.cluster.local:27017/middleoffice"
+        - name: BASE_URL
+          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"          
+        ports:
+        - containerPort: 80
+          name: http
+      - name: mo-apivote
+        image: jpgouigoux/mo-apivote
+        env:
+        - name: PORT
+          value: "82"
+        - name: MONGO_URL
+          value: "mongodb://mongo-service.middleoffice.svc.cluster.local:27017/middleoffice"
+        - name: WEBHOOKS_EXECVOTE
+          value: '[{"topic":"POST+*/execvote", "callback":"/api/execvote", "method":"POST"}]'
+        - name: BASE_URL
+          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"
+        ports:
+        - containerPort: 82
+          name: http82

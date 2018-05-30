@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elastic-deployment
+  namespace: middleoffice
+  labels:
+    app: elastic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elastic
+  template:
+    metadata:
+      labels:
+        app: elastic
+    spec:
+      containers:
+      - name: elastic
+        image: elasticsearch:1.7.6-alpine
+        ports:
+        - containerPort: 9200
+          name: elastic
+        livenessProbe:
+           initialDelaySeconds: 25
+           timeoutSeconds: 1
+           periodSeconds: 8
+           successThreshold: 1
+           failureThreshold: 2
+           httpGet:
+              path: /
+              port: 9200

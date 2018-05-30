@@ -1,0 +1,54 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: traefik-deploy
+  namespace: middleoffice
+  labels:
+    app: traefik
+    tier: proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+      tier: proxy
+  template:
+    metadata:
+      labels:
+        app: traefik
+        tier: proxy
+    spec:
+      serviceAccountName: traefik-service-account
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: config
+          configMap:
+            name: traefik-conf
+      containers:
+      - image: traefik
+        name: traefik
+        resources:
+          limits:
+            cpu: "200m"
+            memory: "30Mi"
+          requests:
+            cpu: "100m"
+            memory: "20Mi"
+        volumeMounts:
+          - mountPath: "/config"
+            name: "config"
+        ports:
+        - containerPort: 80
+          name: http
+          hostPort: 80
+        - containerPort: 8080
+          name: traefik-ui
+          hostPort: 8080
+        - containerPort: 443
+          name: https
+          hostPort: 443
+        args:
+        - --configfile=/config/traefik.toml
+        - --api
+        - --loglevel=DEBUG
+        - --kubernetes

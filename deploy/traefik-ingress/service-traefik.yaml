@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: middleoffice
+  name: traefik
+  labels:
+    app: traefik
+spec:
+  selector:
+    app: traefik
+  ports:
+    - port: 80
+      name: http
+      protocol: TCP
+    - port: 443
+      name: https
+      protocol: TCP
+    - port: 8080
+      name: traefik-ui
+      protocol: TCP
