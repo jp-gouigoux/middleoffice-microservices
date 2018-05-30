@@ -26,7 +26,7 @@ spec:
   - name: http84
     port: 84
     protocol: TCP
-    targetPort: http84   
+    targetPort: http84
   type: ClusterIP
   selector:
     app: mo-ux

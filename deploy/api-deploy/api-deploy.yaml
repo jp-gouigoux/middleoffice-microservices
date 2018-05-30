@@ -24,7 +24,7 @@ spec:
         - name: MONGO_URL
           value: "mongodb://mongo-service.middleoffice.svc.cluster.local:27017/middleoffice"
         - name: BASE_URL
-          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"
+          value: "http://portal.microservice.k8s.lab/"
         ports:
         - containerPort: 81
           name: http81
@@ -34,7 +34,7 @@ spec:
         - name: MONGO_URL
           value: "mongodb://mongo-service.middleoffice.svc.cluster.local:27017/middleoffice"
         - name: BASE_URL
-          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"          
+          value: "http://portal.microservice.k8s.lab/"          
         ports:
         - containerPort: 80
           name: http
@@ -48,7 +48,7 @@ spec:
         - name: WEBHOOKS_EXECVOTE
           value: '[{"topic":"POST+*/execvote", "callback":"/api/execvote", "method":"POST"}]'
         - name: BASE_URL
-          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"
+          value: "http://portal.microservice.k8s.lab/"
         ports:
         - containerPort: 82
           name: http82

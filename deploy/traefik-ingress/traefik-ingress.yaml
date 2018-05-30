@@ -24,32 +24,42 @@ spec:
   - host: portal.microservice.k8s.lab
     http:
       paths:
-      - path: /
-        backend:
+      - backend:
           serviceName: mo-ux-service
           servicePort: http
-    http:
-      paths:
-      - path: /api/requests, /api/requests/{id:[0-9a-z]+
-        backend:
+        path: /
+
+      - backend:
           serviceName: mo-api-service
           servicePort: http81
-    http:
-      paths:
-      - path: /api/requeststype, /api/requesttypes/{code}
-        backend:
+        path: /api/requests, /api/requests/{id:[0-9a-z]+}
+        
+      - backend:
           serviceName: mo-api-service
           servicePort: http82
-    http:
-      paths:
-      - path: /api/requests/{id:[0-9a-z]+}/vote
-        backend:
+        path: /api/requeststype, /api/requesttypes/{code}
+
+      - backend:
           serviceName: mo-api-service
-          servicePort: http         
-  - host: portal.microservice.k8s.lab
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: mo-ux-service
           servicePort: http
+        path: /api/requests/{id:[0-9a-z]+}/vote
+        
+      - backend:
+          serviceName: mo-ux-service
+          servicePort: http81
+        path: /api/ux/request
+        
+      - backend:
+          serviceName: mo-ux-service
+          servicePort: http83
+        path: /api/ux/requests
+        
+      - backend:
+          serviceName: mo-ux-service
+          servicePort: http84
+        path: /api/ux/requesttype
+        
+      - backend:
+          serviceName: mo-ux-service
+          servicePort: http82          
+        path: /api/ux/requests/{id:[0-9a-z]+}/vote
