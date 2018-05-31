@@ -1,14 +1,41 @@
 # Instanciation de middleoffice-microservices dans Kubernetes
 
 Remarque: ceci est une plateforme de démonstration permettant de mettre en place une architecture microservices dans un environnement Kubernetes
+## Structure répo git
+
+Répertoire deploy:
+
+Contient les manifestes de déploiements des objets Kubernetes "Deployement, POD, Service, Ingress, Namespace" :
+
+- mongo-deploy : service et déploiement mongo
+- elastic-deploy : service et déploiement elasticsearch
+- api-deploy : service et déploiement des apis
+- ux-portal-deploy : service et déploiement des uxs
+- traefik-deploy : service, ingress, rbac, et déploiement du reverse proxy traefik point d'entrée du lab
 
 ## Prérequis
 
 - Disposer d'un environnement Kubernetes (Minikube, Kubeadm, GKE, Kubernetes intégré à Docker)
 - Cloner ce le repository Git
 - Diposer de Kubectl pour administrer Kubernetes
+- modifier le fichier hosts de votre station de travail
 
+## Modification fichier Hosts
+
+Récupérer l'ip du noeud Kubernetes : 192.168.99.100
+
+```shell
+### fichier hosts
+192.168.99.100 portal.microservice.k8s.lab traefik-ui.microservice.k8s.lab elastic.microservice.k8s.lab
+```
 ## Description des Pods
+
+1 POD MONGO, 1 conteneur
+1 POD ElasticSearch, 1 conteneur
+1 POD API Rest JAVASCRIPT, 3 conteneurs
+1 POD UX JAVASCRIPT, 5 conteneurs
+1 POD REVERSE PROXY Traefik, 1 conteneur
+
 
 ## Création du Namespaces
 
@@ -48,6 +75,14 @@ Enfin un service mo-ux sera créé qui s'appliquera au label app: mo-ux qui expo
 
 ### Mongo
 
+```shell
+kubectl create -f deploy/mongo-deploy/
+```
+
+Création d'un déploiement mongo, utilisé pour écrire les données des apis. Un service de type NodePort est créé pour exposer le service mongo directement sur le noeud sur un port aléatoire compris entre 30000-32767.
+
+
+
 
 ### Ux
 
@@ -62,6 +97,18 @@ Enfin un service mo-api-service sera créé qui s'appliquera au label app: mo-ap
 
 ### Traefik
 
+```shell
+kubectl create -f deploy/traefik-deploy/
+```
 
+Création d'un ingress traefik avec les rbac nécessaires pour effectuer ces tâches.
 
-Deployement in Kubernetes Cluster
+### Commandes
+
+```shell
+kubectl get pods -n middleoffice
+kubectl describe pods "IDPOD" -n midddleoffice
+kubectl logs "IDPOD" -c "conteneur" -n middleoffice
+kubectl get ing -n middleoffice
+kubectl get svc -n middleoffice
+```

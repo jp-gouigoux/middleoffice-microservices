@@ -22,42 +22,49 @@ spec:
         - name: PORT
           value: "81"
         - name: BASE_URL
-          value: "http://middleoffice-microservice.middleoffice.svc.cluster.local/middleoffice"         
+          value: "http://portal.microservice.k8s.lab"         
         ports:
         - containerPort: 81
           name: http81
+          
       - name: mo-portal
         image: jpgouigoux/mo-portal
         ports:
         - containerPort: 80
           name: http
+        env:
+        - name: BASE_URL
+          value: "http://portal.microservice.k8s.lab"
+          
       - name: mo-uxrequest-vote
         image: jpgouigoux/mo-uxrequest-vote
         env:
         - name: PORT
           value: "82"
         - name: BASE_URL
-          value: "http://portal.microservice.k8s.lab/"          
+          value: "http://portal.microservice.k8s.lab"          
         ports:
         - containerPort: 82
           name: http82
+          
       - name: mo-uxrequests-tobevoted
         image: jpgouigoux/mo-uxrequests-tobevoted
         env:
         - name: PORT
           value: "83"
         - name: BASE_URL
-          value: "http://portal.microservice.k8s.lab/"          
+          value: "http://portal.microservice.k8s.lab"          
         ports:
         - containerPort: 83
           name: http83
+          
       - name: mo-uxrequesttype
         image: jpgouigoux/mo-uxrequesttype
         env:
         - name: PORT
           value: "84" 
         - name: BASE_URL
-          value: "http://portal.microservice.k8s.lab/"
+          value: "http://portal.microservice.k8s.lab"
         ports:
         - containerPort: 84
           name: http84

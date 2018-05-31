@@ -32,28 +32,33 @@ spec:
       - backend:
           serviceName: mo-api-service
           servicePort: http81
-        path: /api/requests, /api/requests/{id:[0-9a-z]+}
+        path: /api/requests
         
       - backend:
           serviceName: mo-api-service
-          servicePort: http82
-        path: /api/requeststype, /api/requesttypes/{code}
+          servicePort: http
+        path: /api/requesttypes
 
       - backend:
           serviceName: mo-api-service
-          servicePort: http
+          servicePort: http82
         path: /api/requests/{id:[0-9a-z]+}/vote
+        
+      - backend:
+          serviceName: mo-api-service
+          servicePort: http
+        path: /api/requesttypes/{code}
+        
+      - backend:
+          serviceName: mo-api-service
+          servicePort: http81
+        path: /api/requests/{id:[0-9a-z]+}
         
       - backend:
           serviceName: mo-ux-service
           servicePort: http81
         path: /api/ux/request
-        
-      - backend:
-          serviceName: mo-ux-service
-          servicePort: http83
-        path: /api/ux/requests
-        
+                
       - backend:
           serviceName: mo-ux-service
           servicePort: http84
