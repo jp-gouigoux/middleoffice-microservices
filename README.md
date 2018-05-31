@@ -28,6 +28,13 @@ Récupérer l'ip du noeud Kubernetes : 192.168.99.100
 ### fichier hosts
 192.168.99.100 portal.microservice.k8s.lab traefik-ui.microservice.k8s.lab elastic.microservice.k8s.lab
 ```
+
+## URLS
+
+http://portal.microservice.k8s.lab
+http://traefik-ui.microservice.k8s.lab
+http://elastic.microservice.k8s.lab
+
 ## Description des Pods
 
 1 POD MONGO, 1 conteneur
