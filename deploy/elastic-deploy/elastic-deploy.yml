@@ -22,11 +22,19 @@ spec:
         - containerPort: 9200
           name: elastic
         livenessProbe:
-           initialDelaySeconds: 25
+           initialDelaySeconds: 8
            timeoutSeconds: 1
            periodSeconds: 8
            successThreshold: 1
            failureThreshold: 2
            httpGet:
               path: /
+              port: 9200
+        readinessProbe:
+           initialDelaySeconds: 8
+           timeoutSeconds: 1
+           periodSeconds: 8
+           successThreshold: 1
+           failureThreshold: 2
+           tcpSocket:
               port: 9200

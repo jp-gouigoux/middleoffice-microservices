@@ -21,3 +21,19 @@ spec:
         ports:
         - containerPort: 27017
           name: mongo
+        livenessProbe:
+           initialDelaySeconds: 8
+           timeoutSeconds: 1
+           periodSeconds: 8
+           successThreshold: 1
+           failureThreshold: 2
+           tcpSocket:
+              port: 27017
+        readinessProbe:
+           initialDelaySeconds: 8
+           timeoutSeconds: 1
+           periodSeconds: 8
+           successThreshold: 1
+           failureThreshold: 2
+           tcpSocket:
+              port: 27017
