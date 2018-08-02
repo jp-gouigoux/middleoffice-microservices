@@ -61,6 +61,11 @@ spec:
                 
       - backend:
           serviceName: mo-ux-service
+          servicePort: http83
+        path: /api/ux/requests
+                
+      - backend:
+          serviceName: mo-ux-service
           servicePort: http84
         path: /api/ux/requesttype
         
