@@ -53,7 +53,7 @@ spec:
         - name: PORT
           value: "83"
         - name: BASE_URL
-          value: "http://portal.microservice.k8s.lab"          
+          value: "http://mo-api-service.middleoffice.svc.cluster.local:81"          
         ports:
         - containerPort: 83
           name: http83
