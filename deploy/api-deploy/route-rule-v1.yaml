@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  labels:
+    app: mo-api
+  name: mo-api-service-route-rule
+  namespace: middleoffice
+spec:
+  destination:
+    name: mo-api-service
+  route:
+  - labels:
+      version: v1
+    weight: 20 
+  - labels:
+      version: v2
+    weight: 80
+  # httpFault:
+    # delay:
+      # percent: 10
+      # fixedDelay: 3s
+    # abort:
+      # percent: 10
+      # httpStatus: 500

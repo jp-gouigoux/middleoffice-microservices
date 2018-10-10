@@ -1,0 +1,160 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mo-api
+  name: mo-api-deployment
+  namespace: middleoffice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mo-api
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/status: '{"version":"5a357b5fa6005e3d7642e92accb42383c4782e9865d5c5df193217a69bebcf46","initContainers":["istio-init"],"containers":["istio-proxy"],"volumes":["istio-envoy","istio-certs"],"imagePullSecrets":null}'
+      creationTimestamp: null
+      labels:
+        app: mo-api
+        version: v1
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "81"
+        - name: MONGO_URL
+          value: mongodb://mongo-service.middleoffice.svc.cluster.local:27017/middleoffice
+        - name: BASE_URL
+          value: http://portal.microservice.k8s.lab
+        image: jpgouigoux/mo-apirequest
+        name: mo-apirequest
+        ports:
+        - containerPort: 81
+          name: http81
+        resources: {}
+      - env:
+        - name: MONGO_URL
+          value: mongodb://mongo-service.middleoffice.svc.cluster.local:27017/middleoffice
+        - name: BASE_URL
+          value: http://portal.microservice.k8s.lab
+        image: jpgouigoux/mo-apirequesttype
+        name: mo-apirequesttype
+        ports:
+        - containerPort: 80
+          name: http
+        resources: {}
+      - env:
+        - name: PORT
+          value: "82"
+        - name: MONGO_URL
+          value: mongodb://mongo-service.middleoffice.svc.cluster.local:27017/middleoffice
+        - name: WEBHOOKS_EXECVOTE
+          value: '[{"topic":"POST+*/execvote", "callback":"/api/execvote", "method":"POST"}]'
+        - name: BASE_URL
+          value: http://portal.microservice.k8s.lab
+        image: jpgouigoux/mo-apivote
+        name: mo-apivote
+        ports:
+        - containerPort: 82
+          name: http82
+        resources: {}
+      - args:
+        - proxy
+        - sidecar
+        - --configPath
+        - /etc/istio/proxy
+        - --binaryPath
+        - /usr/local/bin/envoy
+        - --serviceCluster
+        - mo-api
+        - --drainDuration
+        - 45s
+        - --parentShutdownDuration
+        - 1m0s
+        - --discoveryAddress
+        - istio-pilot.istio-system:15007
+        - --discoveryRefreshDelay
+        - 1s
+        - --zipkinAddress
+        - zipkin.istio-system:9411
+        - --connectTimeout
+        - 10s
+        - --statsdUdpAddress
+        - istio-statsd-prom-bridge.istio-system:9125
+        - --proxyAdminPort
+        - "15000"
+        - --controlPlaneAuthPolicy
+        - NONE
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: INSTANCE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: ISTIO_META_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: ISTIO_META_INTERCEPTION_MODE
+          value: REDIRECT
+        image: gcr.io/istio-release/proxyv2:1.0.0
+        imagePullPolicy: IfNotPresent
+        name: istio-proxy
+        resources:
+          requests:
+            cpu: 10m
+        securityContext:
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsUser: 1337
+        volumeMounts:
+        - mountPath: /etc/istio/proxy
+          name: istio-envoy
+        - mountPath: /etc/certs/
+          name: istio-certs
+          readOnly: true
+      initContainers:
+      - args:
+        - -p
+        - "15001"
+        - -u
+        - "1337"
+        - -m
+        - REDIRECT
+        - -i
+        - '*'
+        - -x
+        - ""
+        - -b
+        - 81, 80, 82,
+        - -d
+        - ""
+        image: gcr.io/istio-release/proxy_init:1.0.0
+        imagePullPolicy: IfNotPresent
+        name: istio-init
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+          privileged: true
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: istio-envoy
+      - name: istio-certs
+        secret:
+          optional: true
+          secretName: istio.default
+status: {}
+---
