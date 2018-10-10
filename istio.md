@@ -164,3 +164,9 @@ La création du déploiement va créer nos Pods en version 1 et en version 2.
 Une fois les pods déployés, il sera possible de vérifier la gestion des flux par Istio.
 
 
+
+## Installation middleoffice avec istio
+
+```kubectl create -f namespaces.yaml```
+```kubectl create -f ux-portal-deploy\ux-portal-deploy-istio-sidecar.yaml -f ux-portal-deploy\service-ux.yaml -f ux-portal-deploy\VirtualService.yaml -f ux-portal-deploy\destinationrule.yaml```
+    
