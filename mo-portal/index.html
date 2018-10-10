@@ -4,9 +4,17 @@
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     </head>
     <body>
-        <h1>Middle Office microservices</h1>
-        <p>Click <a href="/api/ux/requesttype">here</a> to customize a request type (business administrators only)</p>
-        <p>Click <a href="/api/ux/request">here</a> to submit a request</p>
-        <p>Click <a href="/api/ux/requests">here</a> to retrieve the list of requests to be voted (voters only)</p>
+        <div class="col-md-5">
+            <h1>Middle Office microservices</h1>
+            <form method="GET" action="/api/ux/requesttype">
+                <button type="submit" class="btn btn-warning">Customize a request type (admins only)</button>
+            </form>
+            <form method="GET" action="/api/ux/request">
+                <button type="submit" class="btn btn-primary">Submit a request</button>
+            </form>
+            <form method="GET" action="/api/ux/requests">
+                <button type="submit" class="btn btn-primary">Retrieve a list of request to be voted (voters only)</button>
+            </form>
+        </div>
     </body>
 </html>

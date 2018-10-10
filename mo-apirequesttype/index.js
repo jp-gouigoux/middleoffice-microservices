@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// TODO : make use of this function to implement combo lists instead of typing request type code in the forms
 app.get('/api/requesttypes', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {

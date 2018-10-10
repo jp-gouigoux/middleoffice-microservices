@@ -13,6 +13,35 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+function executeVote(requestobject, vote) {
+    var webhooks = JSON.parse(process.env.WEBHOOKS || '[]');
+    var execvotehooks = webhooks.items.filter(function(item){
+        return item.topic == 'POST+*/execvote';
+    });
+
+    var requestobjecttype_url = base_url + '/api/requesttypes/' + requestobject.type;
+    console.log('requestobjecttype_url: ' + requestobjecttype_url);
+    request(requestobjecttype_url, { json: true }, function(error, result, body) {
+        if (error) {
+            console.log('Error retrieving request type by calling ' + requestobjecttype_url + ': ', error);
+            res.status(500).end();
+        } else {
+            var content = { 'request': requestobject, 'vote': vote, 'type': body };
+            for (i = 0; i < execvotehooks.length; i++) {
+                request({
+                    url: execvotehooks[i].callback,
+                    method: execvotehooks[i].method,
+                    body: JSON.stringify(content)
+                }, function (err, res, bodyhook) {
+                    if (!err && res.statusCode == 200) {
+                        console.log('Incorrect call to webhook ' + execvotehooks[i].callback + '. Return was: ' + bodyhook);
+                    }
+                });
+            }
+        }
+    });
+}
+
 app.post('/api/requests/:id/vote', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
@@ -38,6 +67,7 @@ app.post('/api/requests/:id/vote', function(req, res) {
                             console.log('Error retrieving request to be voted by calling ' + requestobject_url + ': ', error);
                             res.status(500).end();
                         } else {
+                            var requestobject = body;
                             if (body.voted == true) {
                                 res.status(403).send('Request has already been voted');
                             } else {
@@ -87,7 +117,7 @@ app.post('/api/requests/:id/vote', function(req, res) {
                                                         console.log('A vote has been inserted');
 
                                                         // Now and only now the vote transaction has been secured, the events are called
-                                                        // TODO : Create a new microservices called mo-apiexecvote and call it through a webhook
+                                                        executeVote(requestobject, vote);
 
                                                         // TODO : Add a Location header, using an environment variable for base URL
                                                         res.status(203);
@@ -98,12 +128,8 @@ app.post('/api/requests/:id/vote', function(req, res) {
                                                 });
                                             }
                                         });        
-                                        
-
                                     }
                                 });
-
-
                             }
                         }
                     });

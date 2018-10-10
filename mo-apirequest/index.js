@@ -13,6 +13,10 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+// TODO : base every NodeJS service on a node base image with express and mongo client to save bandwidth and compile time
+
+// TODO : as for every other service in the project, an Open API description should be added
+
 app.get('/api/requests', function(req, res) {
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
@@ -98,6 +102,8 @@ app.patch('/api/requests/:id', function(req, res) {
 });
 
 app.post('/api/requests', function(req, res) {
+    // TODO : encode the given values in order to avoid problems in display and security breaches, particularly
+    // for technical payload which often comes with quotes thus causing problem in the display of text area
     MongoClient.connect(mongo_url, function (err, db) {
         if (err) {
             console.log('Unable to connect to the MongoDB server: ', err);

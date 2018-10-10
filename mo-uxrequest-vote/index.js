@@ -11,7 +11,6 @@ app.get('*', function(req, res) {
     var arr = initialURL.replace('/vote', '').split('/');
     var requestId = arr[arr.length - 1];
     var requestobject_url = base_url + '/api/requests/' + requestId;
-    //var requestobject_url = base_url + req.header('X-Forwarded-Prefix').replace('/vote', '').replace('/ux', ''); // TODO : Make this construction less dependent from UX URLs by directly extracting the request id
     console.log('requestobject_url: ' + requestobject_url);
     request(requestobject_url, { json: true }, function(error, result, body) {
         if (error) {
