@@ -1,0 +1,47 @@
+# Objectif décrire les objets Kubernetes, étapes par étapes
+
+1 - Description de l'api server :
+	- Définir ce qu'est le contexte Kubernetes et le fichier kubeconfig
+	- définir ce qu'est un namespace (lié au contexte)
+	- Un admnistrateur contacte l'api server via la commande Kubectl : Qu'est ce qui se passe ?
+	- donner la description de la commande kubectl
+	- faire un lien avec ETCD
+	
+2 - description d'un POD, d'un Deployement et d'un service
+	- déploiement d'un pod via la commande kubectl run
+	- Diagramme du process : Api-server, Scheduler, Controller Manager Deployment, Pod running
+	- Définition du scheduler
+	- Définition généralisé du terme Controller Manager : C’est un service général ayant beaucoup de responsabilité. Il est responsable d’un certain nombre de contrôle, comme la régulation de l’état du cluster et la réalisation de tâches de routines. Pour les instances, le replication controller s’assure que le nombre de réplica déployé pour un service donné correspond bien à celui voulu. Les détails de ces opérations sont écrits dans etcd, et le controller manager vérifie les changements à travers l’API Server.
+        	Quand une modification est à faire, le contrôleur lit les nouvelles informations et implémente la procédure pour atteindre l’état souhaité, définit par la modification
+	- création d'un service de type Nodeport, pour l'exposition du pod
+	- Définition de l'objet service de type Nodeport
+	- Définition de l'objet deployement (Controller)
+
+3 - création d'un pod avec replicas
+	- déploiement du pod via la commande kubectl run --replicas=2
+	- création service loadbalancing
+	- définition de l'objet replicaset
+
+4 - Création d'un DaemonSet (optionnel, on peut juste en parler rapidement)
+	- différence entre le déploiement et le DS
+	- création du DS
+	- principe du DS (pod collé à un noeud)
+	
+	
+5 - Déploiement de middleoffice - sans istio
+	- Définition du fonctionnement du DNS (résolution du nom des pods, des services)
+	- définition de ce qu'est un ingress avec la mise en place Traefik
+	- (OPTIONNEL si on ne souhaite pas faire de volumes) définition des volumes (persitent volume, persistentvolumeclaim)
+	- définition des services ClusterIP
+	- Définition des labels positionnés sur les Deployement
+	- Définition de ce qu'est une Configmap (traefik)
+	- Définition de ce que sont les RBAC (traefik)
+	- (OPTIONNEL -  cad si on met de l'https sur middleoffice)Définition de que sont les secrets (traefik)
+	- Définition des LivenessProbe et ReadinessProbe (elastic-deploy)
+	
+	
+	
+
+
+	
+	
