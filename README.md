@@ -75,7 +75,8 @@ Enfin un service elastic-service sera créé qui s'appliquera au label app: elas
 ### Apis
 
 ```shell
-kubectl create -f deploy/ux-portal-deploy/
+kubectl create -f deploy/ux-portal-deploy/ux-portal-deploy.yaml
+kubectl create -f deploy/ux-portal-deploy/service-ux.yaml
 ```
 
 Cela va créer un déploiement nommé 'mo-api-deployment' dans le namespace middleoffice. 
@@ -91,7 +92,12 @@ kubectl create -f deploy/mongo-deploy/
 ```
 
 Création d'un déploiement mongo, utilisé pour écrire les données des apis. 
-Un service de type NodePort est créé pour exposer le service mongo directement sur le noeud sur un port aléatoire compris entre 30000-32767.
+Un service de type NodePort est créé pour exposer le service mongo directement sur le noeud sur le port 30017.
+
+Accès à MongoDB :
+
+```Ip de votre serveur Kubernetes et le ort du service NodePort (30017)
+```
 
 
 
@@ -100,7 +106,8 @@ Un service de type NodePort est créé pour exposer le service mongo directement
 
 
 ```shell
-kubectl create -f deploy/api-deploy/
+kubectl create -f deploy/api-deploy/api-deploy.yaml
+kubectl create -f deploy/api-deploy/service-api.yaml
 ```
 
 Cela va créer un déploiement nommé 'mo-ux-deployment' dans le namespace middleoffice. 
@@ -111,8 +118,11 @@ Enfin un service mo-api-service sera créé qui s'appliquera au label app: mo-ap
 
 ### Traefik
 
+Dans le répertoire deploy 
+
 ```shell
-kubectl create -f deploy/traefik-deploy/
+kubectl create -f traefik-ingress/traefik-deploy.yaml -f traefik-ingress/configmap-traefik.yaml -f  traefik-ingress/rbac-ingress.yaml -f traefik-ingress/traefik-ingress.yaml -f traefik-ingress/service-traefik.yaml
+
 ```
 
 Création d'un ingress traefik avec les rbac nécessaires pour effectuer ces tâches.

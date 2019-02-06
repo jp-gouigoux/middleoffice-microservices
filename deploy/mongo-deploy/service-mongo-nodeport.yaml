@@ -7,7 +7,8 @@ metadata:
   namespace: middleoffice
 spec:
   ports:
-  - name: mongo
+  - nodePort: 30017
+    name: mongo
     port: 27017
     protocol: TCP
     targetPort: 27017

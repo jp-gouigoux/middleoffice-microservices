@@ -28,7 +28,7 @@ spec:
           name: http81
           
       - name: mo-portal
-        image: jpgouigoux/mo-portal
+        image: jpgouigoux/mo-portal:0.1
         ports:
         - containerPort: 80
           name: http
